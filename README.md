@@ -11,6 +11,7 @@ chamada assincrona flask
 
 ps -ef | grep cronometro
 
-
+#Gerar video de teste
+ffmpeg -f lavfi -i smptebars=duration=10:size=640x360:rate=30 teste.mp4
 
  https://gist.github.com/mowings/6960b8058daf44be1b4e
