@@ -11,7 +11,7 @@ _relogio() {
 while true 
 do
 	_relogio
-        echo $RETORNO > timeResult.txt
+        echo $RETORNO > timeResult1.txt
 done
 
 

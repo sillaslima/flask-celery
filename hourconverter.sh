@@ -5,7 +5,7 @@ dir=`pwd`
 workspace="$dir/tmp/video_extraido"
 
 if [ $captura = "captura" ]; then
-cronometro=`cat timeResult.txt`
+cronometro=`cat timeResult1.txt`
 fi
 tempoPassado=`expr $cronometro - 5`
 tempoFuturo=`expr $tempoPassado + 20`
@@ -35,9 +35,8 @@ trataCronometro $tempoPassado
 horacorte=`echo $RETORNO`
 trataCronometro $tempoFuturo
 horaFutura=`echo $RETORNO`
-sleep 16
+sleep 8
 
-mkdir $workspace
+mkdir -p $workspace
 
 ffmpeg -i videoCamera.avi -vcodec copy -ss $horacorte -t $horaFutura -f avi pipe:1 | cat > $workspace/$videoCaptura.avi
-

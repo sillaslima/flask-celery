@@ -9,8 +9,8 @@ from flask import Flask, request,make_response, jsonify
 #from flask_sqlalchemy import SQLAlchemy
 #from numpy.core.records import record
 
-from cronometro import comecar, consultaCronometro, finaliza_cronometro
-from cronometro import gravar, para_gravacao
+#from cronometro import comecar, consultaCronometro, finaliza_cronometro
+from cronometro import gravar, para_gravacao, gera_momento
 
 
 from datetime import timedelta
@@ -25,18 +25,22 @@ app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
 app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379/0'
 app.config['CELERY_TIMEZONE'] = 'UTC'
 
-from celery.schedules import crontab
-app.config['CELERYBEAT_SCHEDULE'] = {
-    'play-every-morning': {
-        'task': 'tasks.play_task',
-        'schedule': crontab(hour=9, minute=10)
-    },
-    'pause-later': {
-        'task': 'tasks.pause_task',
-        'schedule': crontab(hour=9, minute=10)
-    }
-}
+###------------###
+#Agendar tarefas/tasks com o celery
 
+# from celery.schedules import crontab
+# app.config['CELERYBEAT_SCHEDULE'] = {
+#     'play-every-morning': {
+#         'task': 'tasks.play_task',
+#         'schedule': crontab(hour=9, minute=10)
+#     },
+#     'pause-later': {
+#         'task': 'tasks.pause_task',
+#         'schedule': crontab(hour=9, minute=10)
+#     }
+# }
+
+###------------###
 # Initialize Celery
 
 celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
@@ -45,77 +49,53 @@ celery.conf.update(app.config)
 ####
 #Escrita de arquivo
 ####
-@celery.task
-def start():
-    print('iniciando o jogo')
-    return comecar()
 
-@celery.task
-def consultar():
-    print('consultando o tempo do jogo')
-    #tempo = consultaCronometro()
-
-    return 'tempo'
-
-@celery.task
-def finalizar():
-    print('finalizando o jogo')
-    return para_gravacao()
 
 @celery.task
 def vai_record():
     print('gravando o jogo')
     return gravar()
 
+@celery.task
+def finalizar():
+    print('finalizando o jogo')
+    return para_gravacao()
+
+
+@celery.task
+def captura_momento():
+    print('capturando melhor momento')
+    return gera_momento()
 @app.route('/')
 def index():
-    msg = 'Opções: <a href="/start">Start</a> or <a href="/consultar">consultar</a>.' \
-          'or <a href="/finalizar">finalizar</a> or <a href="/record">record</a>'
+    msg = 'Opções: <a href="/record">Inciar Gravação</a> or <a href="/finalizar">Finalizar Gravação</a> or <a href="/capturar">Gera Momento Gravação</a>'
     return msg
 
-@app.route('/start', methods=['GET','POST'])
-def startCrono():
-    start.delay()
-    html = '<a href="/">voltar</a>'
-    return html
-        #, Response(jsonify({'status':'Em Andamento'}))
-
-
-@app.route('/consultar', methods=['GET','POST'])
-def consultarCrono():
-    task = consultar.delay()
-    #pdb.set_trace()
-    print(task.id)
-    print(task.backend)
-    print(dir(task))
-
-    #task = consultar.AsyncResult(task_id)
-    tempo = consultaCronometro()
-
-    response = {
-            'estadoAtual': task.state,
-            'id': str(task.id),
-            'successful': str(task.backend),
-            'status': str(task.status),
-            'tempoAtual' : tempo,
-            'resultado' : str(task.result)
-
-        }
-    return jsonify(response)
 
 @app.route('/finalizar', methods=['GET','POST'])
 def fimCrono():
     finalizar.delay()
-    return jsonify({'status':'Fim Jogo'}), 200
+    html = '<a href="/">voltar</a>'
+    return html
+    #return jsonify({'status':'Fim Jogo'}), 200
 
 @app.route('/record', methods=['GET','POST'])
 def start_record():
     vai_record.delay()
     #a = gravar.out
     #print(a)
-    tempo = consultaCronometro()
-    return jsonify({'gravando':tempo}), 200
 
+    html = '<a href="/">voltar</a>'
+    return html
+
+@app.route('/capturar', methods=['GET','POST'])
+def captura():
+    captura_momento.delay()
+    #a = gravar.out
+    #print(a)
+
+    html = '<a href="/">voltar</a>'
+    return html
 
 
 if __name__ == '__main__':
