@@ -49,9 +49,20 @@ def finaliza_cronometro():
 
 
 def gravar():
-    with open('pidfileFFMPEG.txt', 'w') as f:
-        print(os.getpid(), file=f)
-    cmd = ["sh", "start.sh", "&"]
+
+    #cmd = ["sh", "start.sh"]
+    print(os.getpid())
+    cmd = ["touch","test1.txt"]
+    p = subprocess.Popen(cmd,stdout = subprocess.PIPE,
+                            stderr=subprocess.PIPE,
+                            stdin=subprocess.PIPE,
+                            shell=True)
+    out, err = p.communicate()
+    return str(out)
+
+
+def para_gravacao():
+    cmd = ["sh", "stop.sh"]
     print(os.getpid())
     #cmd = ["ls", "-l" "&"]
     p = subprocess.Popen(cmd,stdout = subprocess.PIPE,

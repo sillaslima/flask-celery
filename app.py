@@ -6,11 +6,12 @@ import time
 import datetime
 import pdb
 from flask import Flask, request,make_response, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from numpy.core.records import record
+#from flask_sqlalchemy import SQLAlchemy
+#from numpy.core.records import record
 
 from cronometro import comecar, consultaCronometro, finaliza_cronometro
-from cronometro import gravar
+from cronometro import gravar, para_gravacao
+
 
 from datetime import timedelta
 
@@ -59,7 +60,7 @@ def consultar():
 @celery.task
 def finalizar():
     print('finalizando o jogo')
-    return finaliza_cronometro()
+    return para_gravacao()
 
 @celery.task
 def vai_record():

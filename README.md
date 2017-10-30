@@ -1,5 +1,5 @@
 # flask-celery
-chamada assincrono flask
+chamada assincrona flask
 
 1. sudo ./run-redis.sh
 2. celery worker -A app.celery --loglevel=info
@@ -7,3 +7,10 @@ chamada assincrono flask
 4. http://localhost:5000/
 
 
+
+
+ps -ef | grep cronometro
+
+
+
+ https://gist.github.com/mowings/6960b8058daf44be1b4e
