@@ -5,7 +5,7 @@ import random
 import time
 import datetime
 import pdb
-from flask import Flask, request,make_response, jsonify
+from flask import Flask,render_template, request,make_response, jsonify
 #from flask_sqlalchemy import SQLAlchemy
 #from numpy.core.records import record
 
@@ -68,8 +68,9 @@ def captura_momento():
     return gera_momento()
 @app.route('/')
 def index():
-    msg = 'Opções: <a href="/record">Inciar Gravação</a> or <a href="/finalizar">Finalizar Gravação</a> or <a href="/capturar">Gera Momento Gravação</a>'
-    return msg
+    #msg = 'Opções: <a href="/record">Inciar Gravação</a> or <a href="/finalizar">Finalizar Gravação</a> or <a href="/capturar">Gera Momento Gravação</a>'
+    #return msg
+    return render_template('index.html')
 
 
 @app.route('/finalizar', methods=['GET','POST'])

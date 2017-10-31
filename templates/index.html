@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>App FutPlay</title>
+
+    <meta name="description"content="">
+	<!--força	o	navegador	a	exibir	o	site	de	acordo	com	o	tamanho	do
+     dispositivo-->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+
+   
+  </head>
+
+  <body>
+
+    <div class="container">
+
+
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active" ><a class="btn btn-link" href="#">Home</a></li>
+            <li role="presentation"><a class="btn btn-link" href="#">Sobre</a></li>
+            <li role="presentation"><a class="btn btn-link" href="#">Contato</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">FutPlay</h3>
+     </div>
+<!--     msg = 'Opções: <a href="/record">Inciar Gravação</a> or <a href="/finalizar">Finalizar Gravação</a>
+ or <a href="/capturar">Gera Momento Gravação</a>'
+ -->
+      <div class="jumbotron">
+        <h1>Opções:</h1>
+        <p class="lead"></p>
+        <div class="col-lg-6">
+          <p><a class="btn btn-lg btn-success" href="/record" role="button">Inciar Gravação</a></p>
+
+        </div>
+        <div class="col-lg-6">
+          <a class="btn btn-lg btn-success" href="/captura" role="button">Capturar</a>
+        </div>
+
+      </div>
+
+
+
+      <footer class="footer">
+        <p>&copy;FutPlay</p>
+      </footer>
+
+    </div>
+  </body>
+</html>
+
