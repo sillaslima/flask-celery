@@ -66,6 +66,12 @@ def finalizar():
 def captura_momento():
     print('capturando melhor momento')
     return gera_momento()
+@app.route('/contato')
+def contato():
+    #msg = 'Opções: <a href="/record">Inciar Gravação</a> or <a href="/finalizar">Finalizar Gravação</a> or <a href="/capturar">Gera Momento Gravação</a>'
+    #return msg
+    return render_template('contato.html')
+
 @app.route('/')
 def index():
     #msg = 'Opções: <a href="/record">Inciar Gravação</a> or <a href="/finalizar">Finalizar Gravação</a> or <a href="/capturar">Gera Momento Gravação</a>'
