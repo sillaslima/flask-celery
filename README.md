@@ -15,3 +15,5 @@ ps -ef | grep cronometro
 ffmpeg -f lavfi -i smptebars=duration=10:size=640x360:rate=30 teste.mp4
 
  https://gist.github.com/mowings/6960b8058daf44be1b4e
+
+ https://v4-alpha.getbootstrap.com/components/forms/
