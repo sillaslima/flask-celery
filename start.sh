@@ -14,7 +14,7 @@
    #Copiar fluxo de video da live para a pasta local
    
    #ffmpeg -filters
-   #ffmpeg -i rtsp://192.168.15.64:554/ -crf 30 -preset ultrafast -r 30 -codec:v copy videoCamera.avi &
+   #ffmpeg -i rtsp://192.168.15.64:554/ -crf 30 -preset ultrafast -r 30 -codec:v copy videoCamera.avi & 	
    ffmpeg -loglevel debug -rtsp_transport tcp -i rtsp://192.168.15.64:554 -c copy -map 0 videoCamera.avi &
  	
 #fi
