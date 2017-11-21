@@ -17,6 +17,17 @@ ffmpeg -loop 1 -i futshow_branco_1920_1080.png -c:v libx264 -t 3 -pix_fmt yuv420
 #Gerar video de teste
 ffmpeg -f lavfi -i smptebars=duration=10:size=640x360:rate=30 teste.mp4
 
+
+
+##Inserir Efeito snapChat aos 4 segundos do video
+
+ffmpeg -y -i gol_marcel.mp4 -vf "format=yuv444p, \
+drawbox=enable='gte(t,4)':y=ih/PHI:color=black@0.4:width=iw:height=160:t=max, \
+drawtext=enable='gte(t,4)':fontfile=/usr/share/fonts/truetype/ubuntu-font-family/Ubuntu-RI.ttf:text='ÔÔÔÔÔ TOCA NO MARCEL QUE É GOL!!':fontcolor=white:fontsize=60:x=(w-tw)/2:y=(h/PHI)+th, \
+format=yuv420p" -c:v libx264 -c:a copy -movflags +faststart output8.mp4
+
+
+
 ############Comando FFMPEG##############
 
 
